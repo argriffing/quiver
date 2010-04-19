@@ -146,6 +146,18 @@ void init_tiny_quiver(char quiver[N][N])
 }
 
 /* quiver is a NxN matrix of characters
+ * N = 3
+ */
+void init_unoriented_cycle_quiver(char quiver[N][N])
+{
+  memset(quiver, 0, N*N*sizeof(char));
+  quiver[0][1] = 1;
+  quiver[0][2] = 1;
+  quiver[1][2] = 1;
+  fill_backward_arrows(quiver);
+}
+
+/* quiver is a NxN matrix of characters
  * N = 6
  */
 void init_tree_quiver(char quiver[N][N])
