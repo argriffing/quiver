@@ -196,6 +196,7 @@ int search(char quiver[N][N], int *order, int depth, int max_depth,
     /* check for win */
     if (!has_cycle(mutant))
     {
+      printf("solution: ");
       int i;
       for (i=0; i<depth+1; i++) {
         printf("%d ", order[i]);
@@ -219,9 +220,19 @@ int main(int argc, const char **argv)
   init_quiver(quiver);
   printf("initial quiver has cycle: %d\n", has_cycle(quiver));
   int order[10];
-  int max_depth = 7;
+  int max_depth = 8;
   int max_multiplicity = 0;
-  search(quiver, order, 0, max_depth, &max_multiplicity);
+  /* iterative deepening search */
+  printf("performing an iterative deepening depth first search\n");
+  int i;
+  for (i=0; i<max_depth; i++) {
+    printf("max moves: %d...\n", i+1);
+    int result = search(quiver, order, 0, i, &max_multiplicity);
+    if (result) break;
+  }
+  if (i == max_depth) {
+    printf("failed to find a quiver lacking an oriented cycle\n");
+  }
   printf("max multiplicity: %d\n", max_multiplicity);
   return EXIT_SUCCESS;
 }
